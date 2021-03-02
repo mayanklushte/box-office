@@ -6,6 +6,7 @@ import Details from '../components/show/Details';
 import Seasons from '../components/show/Seasons';
 import ShowMainData from '../components/show/ShowMainData';
 import { apiGet } from '../misc/config';
+import { InfoBlock, ShowPageWrapper } from './Show.styled';
 
 // useEffect is other custom hook which accepts callbackfunction and array of dpendencies
 // and when one of the dependency changes it call that function again
@@ -65,7 +66,6 @@ const Show = () => {
     };
   }, [id]);
 
-  console.log('show', show);
   if (isLoading) {
     return <div>data is still loading</div>;
   }
@@ -73,7 +73,7 @@ const Show = () => {
     return <div>error ocurred: {error}</div>;
   }
   return (
-    <div>
+    <ShowPageWrapper>
       <ShowMainData
         image={show.image}
         name={show.name}
@@ -81,25 +81,25 @@ const Show = () => {
         summary={show.summary}
         tags={show.genres}
       />
-      <div>
+      <InfoBlock>
         <h2>Details</h2>
         <Details
           status={show.status}
           network={show.network}
           premiered={show.premiered}
         />
-      </div>
+      </InfoBlock>
 
-      <div>
+      <InfoBlock>
         <h2>Seasons</h2>
         <Seasons seasons={show._embedded.seasons} />
-      </div>
+      </InfoBlock>
 
-      <div>
+      <InfoBlock>
         <h2>Cast</h2>
         <Cast cast={show._embedded.cast} />
-      </div>
-    </div>
+      </InfoBlock>
+    </ShowPageWrapper>
   );
 };
 
