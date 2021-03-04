@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ActorGrid from '../components/actor/ActorGrid';
 import CustomRadio from '../components/CustomRadio';
 import MainPageLayout from '../components/MainPageLayout';
@@ -15,6 +15,21 @@ import {
 // this act as children in javascript and then we can grab this in mainPageLaout.js
 // We use this to control template inheritance kind thing in react
 // this how we should manage layouts in react
+const renderResults = results => {
+  if (results && results.length === 0) {
+    return <div>No Results</div>;
+  }
+
+  if (results && results.length > 0) {
+    return results[0].show ? (
+      <ShowGrid data={results} />
+    ) : (
+      <ActorGrid data={results} />
+    );
+  }
+
+  return null;
+};
 
 const Home = () => {
   const [input, setInput] = useLastQuery();
@@ -28,9 +43,12 @@ const Home = () => {
     });
   };
 
-  const onInputChange = ev => {
-    setInput(ev.target.value);
-  };
+  const onInputChange = useCallback(
+    ev => {
+      setInput(ev.target.value);
+    },
+    [setInput]
+  );
 
   const onKeyDown = ev => {
     if (ev.keyCode === 13) {
@@ -38,25 +56,9 @@ const Home = () => {
     }
   };
 
-  const onRadioChange = ev => {
+  const onRadioChange = useCallback(ev => {
     setSearchOption(ev.target.value);
-  };
-
-  const renderResults = () => {
-    if (results && results.length === 0) {
-      return <div>No Results</div>;
-    }
-
-    if (results && results.length > 0) {
-      return results[0].show ? (
-        <ShowGrid data={results} />
-      ) : (
-        <ActorGrid data={results} />
-      );
-    }
-
-    return null;
-  };
+  }, []);
 
   // onkey down is function where we check which key is press using javascript keycode
   // on chnage will handle change of element and {input} is used to set useState element to input box
@@ -99,7 +101,7 @@ const Home = () => {
         </button>
       </SearchButtonWrapper>
 
-      {renderResults()}
+      {renderResults(results)}
     </MainPageLayout>
   );
 };
