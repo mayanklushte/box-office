@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import MainPageLayout from '../components/MainPageLayout';
 import ShowGrid from '../components/show/ShowGrid';
 import { apiGet } from '../misc/config';
-import { useShow } from '../misc/custom-hooks';
+import { useShows } from '../misc/custom-hooks';
 
 const Starred = () => {
-  const [starred] = useShow();
+  const [starred] = useShows();
   const [shows, setShow] = useState(null);
   const [isLoding, setIsLoding] = useState(true);
   const [error, setError] = useState(null);

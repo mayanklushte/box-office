@@ -3,6 +3,7 @@ import ActorGrid from '../components/actor/ActorGrid';
 import MainPageLayout from '../components/MainPageLayout';
 import ShowGrid from '../components/show/ShowGrid';
 import { apiGet } from '../misc/config';
+import { useLastQuery } from '../misc/custom-hooks';
 // children layout
 // we wrap MainPageLayout Component arrond the content of page
 // this act as children in javascript and then we can grab this in mainPageLaout.js
@@ -10,7 +11,7 @@ import { apiGet } from '../misc/config';
 // this how we should manage layouts in react
 
 const Home = () => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useLastQuery();
   const [results, setResults] = useState(null);
   const [searchOption, setSearchOption] = useState('shows');
 
